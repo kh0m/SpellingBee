@@ -4,10 +4,10 @@ import Cell from "./Cell";
 
 interface CellsContainerProps {
   letters: string[];
-  buttonPressed: (event: {text: string}) => void;
+  onButtonPressed: (event: {text: string}) => void;
 };
 
-const CellsContainer = ({letters, buttonPressed}: CellsContainerProps) => {
+const CellsContainer = ({letters, onButtonPressed}: CellsContainerProps) => {
   const styles = StyleSheet.create(
     {
       containerStyle: {
@@ -38,28 +38,32 @@ const CellsContainer = ({letters, buttonPressed}: CellsContainerProps) => {
         bottom: 127
       },
     });
+
+  function pressButtonWith(event: {text: string}): void {
+    onButtonPressed(event);
+  }
   
   return (
     <View>
-      <TouchableOpacity onPress={(event) => {buttonPressed({text: letters[0]})}} style={styles.topLeft}>
-          <Cell letter={letters[0]}></Cell>
+      <TouchableOpacity onPress={(event) => {pressButtonWith({text: letters[3]})}} style={styles.topLeft}>
+          <Cell letter={letters[3]}></Cell>
       </TouchableOpacity>
-      <TouchableOpacity onPress={(event) => {buttonPressed({text: letters[1]})}} style={styles.topRight}>
+      <TouchableOpacity onPress={(event) => {pressButtonWith({text: letters[1]})}} style={styles.topRight}>
           <Cell letter={letters[1]}></Cell>
       </TouchableOpacity>
-      <TouchableOpacity onPress={(event) => {buttonPressed({text: letters[2]})}} style={styles.top}>
+      <TouchableOpacity onPress={(event) => {pressButtonWith({text: letters[2]})}} style={styles.top}>
           <Cell letter={letters[2]}></Cell>
       </TouchableOpacity>
-      <TouchableOpacity onPress={(event) => {buttonPressed({text: letters[3]})}} >
-        <Cell letter={letters[3]} required={true}></Cell>
+      <TouchableOpacity onPress={(event) => {pressButtonWith({text: letters[0]})}} >
+        <Cell letter={letters[0]} required={true}></Cell>
       </TouchableOpacity>
-      <TouchableOpacity onPress={(event) => {buttonPressed({text: letters[4]})}} style={styles.bottom}>
+      <TouchableOpacity onPress={(event) => {pressButtonWith({text: letters[4]})}} style={styles.bottom}>
           <Cell letter={letters[4]}></Cell>
       </TouchableOpacity>
-      <TouchableOpacity onPress={(event) => {buttonPressed({text: letters[5]})}} style={styles.bottomRight}>
+      <TouchableOpacity onPress={(event) => {pressButtonWith({text: letters[5]})}} style={styles.bottomRight}>
           <Cell letter={letters[5]}></Cell>
       </TouchableOpacity>
-      <TouchableOpacity onPress={(event) => {buttonPressed({text: letters[6]})}} style={styles.bottomLeft}>
+      <TouchableOpacity onPress={(event) => {pressButtonWith({text: letters[6]})}} style={styles.bottomLeft}>
           <Cell letter={letters[6]}></Cell>
       </TouchableOpacity>
     </View>

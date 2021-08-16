@@ -9,6 +9,8 @@ import InputArea from "./InputArea";
 
 const Game = () => {
   const [text, setText] = useState([] as string[]);
+  const [randomLetters, setRandomLetters] = useState(generateRandomLetters());
+
 
   const styles = StyleSheet.create(
     {
@@ -18,23 +20,43 @@ const Game = () => {
       }
     });
 
-  const randomLetters = generateRandomLetters()
-
   function generateRandomLetters(): string[] {
     return ['A', 'B', 'C', 'D', 'E', 'F', 'G']
   }
 
   function buttonPressed(event: {text: string}) {
-    const newText = (text).concat(event.text)
+    const newText = text.concat(event.text)
     setText(newText)
+  }
+
+  function deleteLetter(): void {
+    const newText = text.slice(0, -1)
+    setText(newText)
+  }
+
+  function shuffle(): void {
+    const requiredLetter = randomLetters[0]
+    const lettersToShuffle = randomLetters.slice(1)
+
+    let currentIndex = lettersToShuffle.length
+
+    while (currentIndex != 0) {
+      let randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex--
+
+      [lettersToShuffle[currentIndex], lettersToShuffle[randomIndex]] = 
+        [lettersToShuffle[randomIndex], lettersToShuffle[currentIndex]]
+    }
+
+    setRandomLetters([requiredLetter].concat(lettersToShuffle))
   }
 
   return (
     <SafeAreaView style={styles.containerStyle}>
       <View style={{height: 120}}></View>
-      <InputArea text={text}></InputArea>
-      <CellsContainer letters={randomLetters} buttonPressed={(event) => buttonPressed(event)}></CellsContainer>
-      <ButtonsContainer></ButtonsContainer>
+      <InputArea text={text} requiredLetter={randomLetters[0]}></InputArea>
+      <CellsContainer letters={randomLetters} onButtonPressed={(event) => buttonPressed(event)}></CellsContainer>
+      <ButtonsContainer onDeleteLetter={deleteLetter} onShuffle={shuffle}></ButtonsContainer>
       <View style={{height: 120}}></View>
     </SafeAreaView>
   );

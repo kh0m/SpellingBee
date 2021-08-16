@@ -4,7 +4,13 @@ import { Button, StyleSheet, View } from "react-native";
 import { color } from "react-native-reanimated";
 import Cell from "./Cell";
 
-const ButtonsContainer = () => {
+
+interface ButtonsContainerProps {
+  onDeleteLetter: () => void;
+  onShuffle: () => void;
+};
+
+const ButtonsContainer = ({onDeleteLetter, onShuffle}: ButtonsContainerProps) => {
   const styles = StyleSheet.create(
     {
       containerStyle: {
@@ -32,13 +38,21 @@ const ButtonsContainer = () => {
         marginHorizontal: 16
       }
     });
+
+  function deleteLetter(): void {
+    onDeleteLetter();
+  }
+
+  function shuffle(): void {
+    onShuffle();
+  }
   
   return (
     <View style={styles.containerStyle}>
-      <TouchableOpacity onPress={()=>{}} style={styles.button} >
+      <TouchableOpacity onPress={()=>{deleteLetter()}} style={styles.button} >
         <Text>Delete</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{}} style={styles.shuffle} >
+      <TouchableOpacity onPress={()=>{shuffle()}} style={styles.shuffle} >
         <Text>🔀</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>{}} style={styles.button} >
