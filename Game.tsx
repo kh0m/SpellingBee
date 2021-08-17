@@ -24,7 +24,7 @@ const Game = () => {
     return ['A', 'B', 'C', 'D', 'E', 'F', 'G']
   }
 
-  function buttonPressed(event: {text: string}) {
+  function addLetter(event: {text: string}) {
     const newText = text.concat(event.text)
     setText(newText)
   }
@@ -55,7 +55,7 @@ const Game = () => {
     <SafeAreaView style={styles.containerStyle}>
       <View style={{height: 120}}></View>
       <InputArea text={text} requiredLetter={randomLetters[0]}></InputArea>
-      <CellsContainer letters={randomLetters} onButtonPressed={(event) => buttonPressed(event)}></CellsContainer>
+      <CellsContainer letters={randomLetters} onButtonPressed={(event) => addLetter(event)}></CellsContainer>
       <ButtonsContainer onDeleteLetter={deleteLetter} onShuffle={shuffle}></ButtonsContainer>
       <View style={{height: 120}}></View>
     </SafeAreaView>
