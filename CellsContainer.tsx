@@ -13,7 +13,7 @@ const CellsContainer = ({letters, onButtonPressed}: CellsContainerProps) => {
       containerStyle: {
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1
+        flex: 6
       },
       top: {
         top: -4
@@ -44,7 +44,7 @@ const CellsContainer = ({letters, onButtonPressed}: CellsContainerProps) => {
   }
   
   return (
-    <View>
+    <View style={styles.containerStyle}>
       <TouchableOpacity onPress={(event) => {pressButtonWith({text: letters[3]})}} style={styles.topLeft}>
           <Cell letter={letters[3]}></Cell>
       </TouchableOpacity>

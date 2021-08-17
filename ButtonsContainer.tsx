@@ -1,8 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
-import { Button, StyleSheet, View } from "react-native";
-import { color } from "react-native-reanimated";
-import Cell from "./Cell";
+import { StyleSheet, View } from "react-native";
 
 
 interface ButtonsContainerProps {
@@ -15,6 +13,8 @@ const ButtonsContainer = ({onDeleteLetter, onShuffle}: ButtonsContainerProps) =>
     {
       containerStyle: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
+        flex: 2,
       },
       button: {
         width: 100,

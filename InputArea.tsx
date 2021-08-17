@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text } from "react-native";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import ButtonsContainer from "./ButtonsContainer";
-import Cell from "./Cell";
-import CellsContainer from "./CellsContainer";
 
 interface InputAreaProps {
   text: string[];
@@ -20,22 +16,24 @@ const InputArea = ({text, requiredLetter}: InputAreaProps) => {
     const interval = setInterval(() => {
       setShowCursor((showCursor) => !showCursor);
     }, 500);
-    return () => clearInterval(interval);
+    return interval
   }
 
-  useEffect(() => {blink()}, []);
+  useEffect(() => {
+    const interval = blink()
+    return () => clearInterval(interval);
+  }, []);
 
   const styles = StyleSheet.create(
     {
       containerStyle: {
-        borderColor: 'gray',
         flexDirection: 'row',
         alignItems: 'center',
         borderRightColor: showCursor ? "gold" : "transparent",
         borderRightWidth: 4,
         paddingHorizontal: 6,
         height: 50,
-        maxWidth: 300
+        maxWidth: 300,
       },
       textStyle: {
         fontSize: currentFont,
