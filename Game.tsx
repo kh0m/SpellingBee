@@ -5,15 +5,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { alphabet } from "./alphabet";
 import ButtonsContainer from "./ButtonsContainer";
 import CellsContainer from "./CellsContainer";
+import { DictionaryService } from "./dictionary-service";
+import { ErrorMessage } from "./error-message";
 import FoundWords from "./FoundWords";
 import InputArea from "./InputArea";
 
 const Game = () => {
   const [text, setText] = useState([] as string[]);
   const [randomLetters, setRandomLetters] = useState(generateRandomLetters());
-  const [points, setPoints] = useState(123);
-  const [foundWords, setFoundWords] = useState(['Test', 'Found', 'Apple']);
-
+  const [points, setPoints] = useState(0);
+  const [foundWords, setFoundWords] = useState([] as string[]);
 
   const styles = StyleSheet.create(
     {
@@ -70,6 +71,62 @@ const Game = () => {
     setRandomLetters([requiredLetter].concat(lettersToShuffle))
   }
 
+  function showError(message: ErrorMessage) {
+    console.error(message)
+    setText([''])
+  }
+
+  function countPoints(text: string): number {
+    if (text.length == 4) {
+      return 1
+    } else if (text.length < 7) {
+      return text.length
+    } else {
+      return 7 + text.length
+    }
+  }
+
+  function addWordToFoundList(newWord: string): void {
+    setFoundWords([newWord].concat(foundWords))
+  }
+
+  async function submit(): Promise<void> {
+    const newWord = text.join('')
+
+    if (newWord.length == 0) { return }
+
+    if (newWord.length < 4) {
+      showError(ErrorMessage.tooFewLetters)
+      return
+    }
+
+    if (!newWord.includes(randomLetters[0])) {
+      showError(ErrorMessage.missingCenterLetter)
+      return
+    }
+    
+    try {
+      const wordFound = await DictionaryService.checkWord(newWord)
+      if (!wordFound) {
+        showError(ErrorMessage.notFound)
+        return
+      }
+
+      if (foundWords.includes(newWord)) {
+          showError(ErrorMessage.alreadyFound)
+          return
+      }
+      setPoints(points + countPoints(newWord))
+      addWordToFoundList(newWord)
+
+    } catch(e) {
+      console.error(e)
+      showError(ErrorMessage.somethingWentWrong)
+    }
+
+    setText([''])
+  }
+
   return (
     <SafeAreaView style={styles.containerStyle}>
       <View style={{flex: 2}}></View>
@@ -85,7 +142,7 @@ const Game = () => {
       </View>
       <CellsContainer letters={randomLetters} onButtonPressed={(event) => addLetter(event)}></CellsContainer>
       <View style={{flex: 1}}></View>
-      <ButtonsContainer onDeleteLetter={deleteLetter} onShuffle={shuffle}></ButtonsContainer>
+      <ButtonsContainer onDeleteLetter={deleteLetter} onShuffle={shuffle} onSubmit={submit}></ButtonsContainer>
       <View style={{flex: 1}}></View>
     </SafeAreaView>
   );

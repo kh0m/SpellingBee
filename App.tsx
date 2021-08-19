@@ -11,6 +11,7 @@
 import React from 'react';
 import 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { DictionaryService } from './dictionary-service';
 import Game from './Game';
 
 const App = () => {

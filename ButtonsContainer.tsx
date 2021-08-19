@@ -6,9 +6,10 @@ import { StyleSheet, View } from "react-native";
 interface ButtonsContainerProps {
   onDeleteLetter: () => void;
   onShuffle: () => void;
+  onSubmit: () => void;
 };
 
-const ButtonsContainer = ({onDeleteLetter, onShuffle}: ButtonsContainerProps) => {
+const ButtonsContainer = ({onDeleteLetter, onShuffle, onSubmit}: ButtonsContainerProps) => {
   const styles = StyleSheet.create(
     {
       containerStyle: {
@@ -46,6 +47,10 @@ const ButtonsContainer = ({onDeleteLetter, onShuffle}: ButtonsContainerProps) =>
   function shuffle(): void {
     onShuffle();
   }
+
+  function submit(): void {
+    onSubmit();
+  }
   
   return (
     <View style={styles.containerStyle}>
@@ -55,7 +60,7 @@ const ButtonsContainer = ({onDeleteLetter, onShuffle}: ButtonsContainerProps) =>
       <TouchableOpacity onPress={()=>{shuffle()}} style={styles.shuffle} >
         <Text>🔀</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{}} style={styles.button} >
+      <TouchableOpacity onPress={()=>{submit()}} style={styles.button} >
         <Text>Enter</Text>
       </TouchableOpacity>
     </View>

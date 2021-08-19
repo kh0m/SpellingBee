@@ -7,7 +7,6 @@ interface FoundWordsProps {
 };
 
 const FoundWords = ({words}: FoundWordsProps) => {
-  const [currentFont, setCurrentFont] = useState(36);
 
   const styles = StyleSheet.create(
     {
@@ -21,15 +20,14 @@ const FoundWords = ({words}: FoundWordsProps) => {
         marginHorizontal: 20
       },
       textStyle: {
-        fontSize: currentFont,
-        fontWeight: "bold",
+        textTransform: 'capitalize'
       }
     });
 
 
   return (
     <View style={styles.containerStyle}>
-      <Text numberOfLines={1}>{words.join('  ')}</Text>
+      <Text numberOfLines={1} style={styles.textStyle}>{words.join('  ')}</Text>
       <Text style={{right: 14, position: 'absolute'}}>⬇</Text>
     </View>
   );
