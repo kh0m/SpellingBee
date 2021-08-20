@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { Dimensions, Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { View } from "react-native";
 
 interface FoundWordsProps {
   words: string[];
+  onOpenFullList: ()=>void
 };
 
-const FoundWords = ({words}: FoundWordsProps) => {
+const FoundWords = ({words, onOpenFullList}: FoundWordsProps) => {
 
   const styles = StyleSheet.create(
     {
@@ -17,19 +18,23 @@ const FoundWords = ({words}: FoundWordsProps) => {
         paddingHorizontal: 24,
         borderColor: 'lightgray',
         borderWidth: 2,
-        marginHorizontal: 20
+        marginHorizontal: 20,
+        opacity: 100
       },
       textStyle: {
         textTransform: 'capitalize'
       }
     });
 
+  function openFullList() {
+    onOpenFullList()
+  }
 
   return (
-    <View style={styles.containerStyle}>
-      <Text numberOfLines={1} style={styles.textStyle}>{words.join('  ')}</Text>
+    <Pressable style={styles.containerStyle} onPress={()=>{openFullList()}}>
+      <Text numberOfLines={1} style={styles.textStyle}>{(words).join('  ')}</Text>
       <Text style={{right: 14, position: 'absolute'}}>⬇</Text>
-    </View>
+    </Pressable>
   );
 };
 
